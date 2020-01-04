@@ -93,9 +93,6 @@ def setParkingSpaceCount(oneIndexedSpaceNumber):
 # All backend stuff to do with google sheets stuff
 #
 
-def dateTimeFormat(dateTimeValue):
-    return dateTimeValue.strftime(DATE_FORMAT_STRING)
-
 def connectSheet():
     if isUninitialized():
         makeConnection()
@@ -119,6 +116,9 @@ def makeConnection():
 #
 # DateTime stuff
 #
+
+def dateTimeFormat(dateTimeValue):
+    return dateTimeValue.strftime(DATE_FORMAT_STRING)
 
 def logVacancy(dateTimeValue = datetime.now()):
     timeListIndex = len(logSheet.col_values(1)) + 1    # Get row to insert time in
