@@ -1,4 +1,4 @@
 */.*
-util/client_secret.json
+*/client_secret.json
 util/sheets_test.py
 *.pyc
