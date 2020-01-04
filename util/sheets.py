@@ -1,12 +1,16 @@
 import gspread
 import time
 from oauth2client.service_account import ServiceAccountCredentials
+from datetime import *
 
 scope = []
 creds = []
 
 sheet = None
+logSheet = None
 client = None
+
+DATE_FORMAT_STRING = "%Y-%M-%d %H:%m:%s %z"
 
 # Getters
 
@@ -47,11 +51,21 @@ def getParkingSpaceCount():
 
 def setOccupied(zeroIndexedSpaceNumber):
     connectSheet() # Refresh state
-    sheet.update_cell(2 + zeroIndexedSpaceNumber, 2, True); # Set the specified space to be occupied
+    index = 2 + zeroIndexedSpaceNumber
+
+    if not isOccupied(zeroIndexedSpaceNumber): # If there is a state change, log it in the log sheet.
+        logOccupation()
+
+    sheet.update_cell(index, 2, True); # Set the specified space to be occupied
 
 def setVacant(zeroIndexedSpaceNumber):
     connectSheet() # Refresh state
-    sheet.update_cell(2 + zeroIndexedSpaceNumber, 2, False); # Set the specified space to be unoccupied
+    index = 2 + zeroIndexedSpaceNumber
+
+    if isOccupied(zeroIndexedSpaceNumber): # If there is a state change, log it in the log sheet.
+        logVacancy()
+
+    sheet.update_cell(index, 2, False); # Set the specified space to be unoccupied
 
 def setParkingSpaceCount(oneIndexedSpaceNumber):
     if (oneIndexedSpaceNumber < 1):
@@ -73,9 +87,14 @@ def setParkingSpaceCount(oneIndexedSpaceNumber):
 
     # If the length is the same as it already is, make no changes.
 
+
+
 #
 # All backend stuff to do with google sheets stuff
 #
+
+def dateTimeFormat(dateTimeValue):
+    return dateTimeValue.strftime(DATE_FORMAT_STRING)
 
 def connectSheet():
     if isUninitialized():
@@ -93,6 +112,37 @@ def makeConnection():
     global client
     client = gspread.authorize(creds)
     global sheet
+    global logSheet
     sheet = client.open('parking-status').sheet1
+    logSheet = client.open("parking-status").logSheet
+
+#
+# DateTime stuff
+#
+
+def logVacancy(dateTimeValue = datetime.now()):
+    timeListIndex = len(logSheet.col_values(1)) + 1    # Get row to insert time in
+    logSheet.update_cell(timeListIndex, 1, dateTimeFormat(dateTimeValue)) # Insert time into list.
+    newLogValue = logSheet.read_cell(timeListIndex - 1, 2) - 1 # Get new count of people in lot
+    logSheet.update_cell(timeListIndex, 2, newLogValue) # Set new count of people in lot to sheet
+
+def logOccupation(dateTimeValue = datetime.now()):
+    columnLength = len(logSheet.col_values(1)[1:]) # Read length of date column
+    timeListIndex = columnLength + 2 # Get new index of insertion into log
+    newOccupancyCount = 0
+
+    if columnLength > 0: # If a previous value exists, our new occupancy is based on the previous value.
+        newOccupancyCount = logSheet.read_cell(timeListIndex - 1, 2) + 1
+    else:                # Otherwise, our new occupancy is 1 because we assume that our initial occupancy is 0.
+        newOccupancyCount = 1
+
+    logSheet.update_cell(timeListIndex, 1, dateTimeFormat(dateTimeValue)) # Set new date in column 1
+    logSheet.update_cell(timeListIndex, 2, newOccupancyCount) # Set new occupancy count in column 2
+
 
 # ALL CODE THAT IS RUN FOR CERTAIN IS RUN HERE
+
+from random import randint
+
+setOccupied(randint(0,10))
+setVacant(randint(0,10))
