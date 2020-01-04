@@ -69,4 +69,15 @@ a {
     border-style: solid;
     width: 75px;
     height: 45px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+.occupied {
+    color: red;
+}
+
+.not-occupied {
+    color: chartreuse;
 }
