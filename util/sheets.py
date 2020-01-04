@@ -39,6 +39,10 @@ def isOccupied(zeroIndexedSpaceNumber):
     occupiedStatuses = occupiedStatusList() # Get CSV from Google Sheets to parse
     return occupiedStatuses[zeroIndexedSpaceNumber].lower() == "true" # Get from list, cast to bool
 
+def getParkingSpaceCount():
+    occupiedStatuses = occupiedStatusList() # get list of booleans from Google Sheets spreadsheet
+    return len(occupiedStatuses) # Return the number of booleans in the list.
+
 # Setters
 
 def setOccupied(zeroIndexedSpaceNumber):
@@ -53,8 +57,7 @@ def setParkingSpaceCount(oneIndexedSpaceNumber):
     if (oneIndexedSpaceNumber < 1):
         return
 
-    parkingStatusList = occupiedStatusList() # Refresh connection, get list
-    initialIndex = len(parkingStatusList)    # Get length of list
+    initialIndex = getParkingSpaceCount() # Get number of parking spaces in lot.
 
     # If the index is greater than the list length, then allocate more rows
     #  to the table and ID accordingly.
