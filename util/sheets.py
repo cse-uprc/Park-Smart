@@ -8,6 +8,8 @@ creds = []
 sheet = None
 client = None
 
+# Getters
+
 def isThereParking():
     return (spacesAvailable() > 0)
 
@@ -35,37 +37,38 @@ def spacesAvailable():
 
 def isOccupied(zeroIndexedSpaceNumber):
     occupiedStatuses = occupiedStatusList() # Get CSV from Google Sheets to parse
+    return occupiedStatuses[zeroIndexedSpaceNumber].lower() == "true" # Get from list, cast to bool
 
-    return occupiedStatuses[zeroIndexedSpaceNumber] == "TRUE" # Get from list, cast to bool
+# Setters
 
 def setOccupied(zeroIndexedSpaceNumber):
     connectSheet() # Refresh state
-
-    sheet.update_cell(2+zeroIndexedSpaceNumber, 2, True); # Set the specified space to be occupied
-
+    sheet.update_cell(2 + zeroIndexedSpaceNumber, 2, True); # Set the specified space to be occupied
 
 def setVacant(zeroIndexedSpaceNumber):
     connectSheet() # Refresh state
-
-    sheet.update_cell(2+zeroIndexedSpaceNumber, 2, False); # Set the specified space to be unoccupied
+    sheet.update_cell(2 + zeroIndexedSpaceNumber, 2, False); # Set the specified space to be unoccupied
 
 def setParkingSpaceCount(oneIndexedSpaceNumber):
     if (oneIndexedSpaceNumber < 1):
         return
 
-    connectSheet() # refresh state
+    parkingStatusList = occupiedStatusList() # Refresh connection, get list
+    initialIndex = len(parkingStatusList)    # Get length of list
 
-    initialIndex = len(occupiedStatusList())
-
+    # If the index is greater than the list length, then allocate more rows
+    #  to the table and ID accordingly.
     if oneIndexedSpaceNumber > initialIndex:
         for i in range( (initialIndex + 2),(oneIndexedSpaceNumber + 2) ):
             sheet.update_cell(i, 1, i-2)
             sheet.update_cell(i, 2, False)
+    # Otherwise, if lesser, eliminate all items indexed at/after oneIndexedSpaceNumber.
     elif oneIndexedSpaceNumber < initialIndex:
         for i in range( (oneIndexedSpaceNumber + 2),(initialIndex + 2)):
             sheet.update_cell(i, 1, "")
             sheet.update_cell(i, 2, "")
 
+    # If the length is the same as it already is, make no changes.
 
 #
 # All backend stuff to do with google sheets stuff
@@ -90,5 +93,3 @@ def makeConnection():
     sheet = client.open('parking-status').sheet1
 
 # ALL CODE THAT IS RUN FOR CERTAIN IS RUN HERE
-
-print(str(spacesAvailable()) + ", " + str(len(occupiedStatusList())))
