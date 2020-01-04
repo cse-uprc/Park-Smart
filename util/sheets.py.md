@@ -21,6 +21,7 @@
     - Sets the number of parking spaces described in the spreadsheet and either erases values or inserts vacant parking spaces as appropriate
 
 ## Backend stuff
+these **do not** need to be called. They are used entirely by the other methods in this file.
 * connectSheet()
     - If no connection has been made, make a connection to the spreadsheet.
 * uninitialized()
