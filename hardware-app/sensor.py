@@ -1,5 +1,5 @@
-# test.py
-# USED FOR TESTING PURPOSES ONLY NOT PART OF FINAL PROJECT
+# sensor.py
+# Library for abstraction of getting data from sensor.
 import RPi.GPIO as GPIO
 import time
 
@@ -13,15 +13,16 @@ ECHO = 24
 GPIO.setup(TRIG, GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 
-GPIO.output(TRIG, False)
-print "Waiting for Sensor"
-time.sleep(2)
 
-while True:
-    GPIO.output(TRIG,True)
+def computeDistance():
+    # Trigger the sensor and get back the distance between itself and the object it is pointed at.
+    GPIO.output(TRIG, False)
+    time.sleep(2)
+
+    GPIO.output(TRIG, True)
     time.sleep(0.00001)
     GPIO.output(TRIG, False)
-    
+
     start = time.time()
     end = time.time()
 
@@ -35,11 +36,11 @@ while True:
         if(end - start > 1):
             break
 
-    sig_time = end - start
+    pulse_length = end - start
 
-    #cm:
-    distance = sig_time / 0.000058
+    distance = pulse_length / 0.000058
 
-    print ('Distance:{} cm'.format(distance))
     time.sleep(.1)
-GPIO.cleanup()
+    GPIO.cleanup()
+
+    return distance
