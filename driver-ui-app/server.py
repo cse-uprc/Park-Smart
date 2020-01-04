@@ -1,5 +1,5 @@
 # Name: server.py
-# Authors: Jacob Hunt, Joey Kilgore, Jared Makai, Jonathan Bender
+# Authors: Jacob Hunt, Joey Kilgore, Jared Maki, Jonathan Bender
 # Python version: 3
 #
 # Description:
@@ -8,6 +8,7 @@
 import os
 from flask import Flask, render_template, request, jsonify
 
+# main Flask server application object
 app = Flask(__name__)
 
 NUMBER_OF_PARKING_SPACES = 10
@@ -56,6 +57,8 @@ def updateParkingSpace():
         req_id = int(request.args.get("id"))
         req_isOccupied = request.args.get("isOccupied")
     
+    # try to update the parking space status and return a json
+    # message indicating success or failure
     try:
         if int(req_isOccupied) == 0:
             req_isOccupied = False
@@ -73,7 +76,6 @@ def updateParkingSpace():
             success = False,
             returnMessage = "A serverside exception occurred",
         )
-
     return jsonify(
         success = True,
         returnMessage = "Parking Space #" + str(req_id) + " Successfully Updated"

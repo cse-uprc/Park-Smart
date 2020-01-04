@@ -15,20 +15,30 @@ Map of parking lot that shows parking spot availability.
 {% endblock %}
 
 {% block body %}
+<div class="row" id="row-1">
 
-<h3 id="parking-map-header-text">
-	Parking Lot Map:
-</h3>
+	<div class="col-lg-7" id="left-col">
+	</div><!-- end div: "left-col" -->
+	
 
-<div id="parking-map-container">
-	<table id="parking-map">
+	<div class="col-lg-5" id="right-col">
+		<h3 id="parking-map-header-text">
+			Parking Lot Map:
+		</h3>
+		<div id="parking-map-container">
+			<div id="parking-map-background">
+				<table id="parking-map">
 
-		{% for i in range(10) %}
-		<tr id="parking-spot-{{i}}">
-			<td class="parking-spot-cell"></td>
-		</tr>
-		{% endfor %}
+					{% for i in range(10) %}
+					<tr id="parking-spot-{{i}}">
+						<td class="parking-spot-cell"></td>
+					</tr>
+					{% endfor %}
 
-	</table>
-</div>
+				</table>
+			</div><!-- end div: "parking-map-background" -->
+		</div><!-- end div: "parking-map-container" -->
+
+	</div><!-- end div: "right-col" -->>
+</div><!-- end div: "row-1" -->
 {% endblock %}
