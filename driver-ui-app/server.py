@@ -6,7 +6,7 @@
 # The server for the web app
 
 # Import Python modules
-import os, sys
+import os, sys, traceback
 from flask import Flask, render_template, request, jsonify
 
 # Make local modules in other directories accessible by modifying the
@@ -71,18 +71,21 @@ def updateParkingSpace():
         if int(req_isOccupied) == 0:
             req_isOccupied = False
             parkingSpaces[req_id].isOccupied = req_isOccupied
+            sheets.setVacant(req_id)
         elif int(req_isOccupied) == 1:
             req_isOccupied = True
             parkingSpaces[req_id].isOccupied = req_isOccupied
+            sheets.setOccupied(req_id)
         else:
             return jsonify(
                 success = False,
                 returnMessage = "Invalid input in HTTP request",
             )
-    except:
+    except Exception as e:
+        raise
         return jsonify(
             success = False,
-            returnMessage = "A serverside exception occurred",
+            returnMessage = "A serverside exception occurred: " + str(e)
         )
     return jsonify(
         success = True,
