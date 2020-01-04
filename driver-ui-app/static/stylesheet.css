@@ -9,3 +9,22 @@ p {
 a {
     color: #7777FF;
 }
+
+#parking-map-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#parking-map-header-text {
+    color: white;
+    text-align: center;
+}
+
+.parking-spot-cell {
+    border-color: white;
+    border-width: 5px 5px 5px 0px;
+    border-style: solid;
+    width: 50px;
+    height: 30px;
+}

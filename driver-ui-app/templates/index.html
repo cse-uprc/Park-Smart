@@ -2,11 +2,11 @@
 {% extends "template.html" %}
 
 {% block title %}
-Index
+Park Smart
 {% endblock %}
 
 {% block description %}
-A bare-bones flask implementation.
+Map of parking lot that shows parking spot availability.
 {% endblock %}
 
 {% block header_script %}
@@ -15,7 +15,20 @@ A bare-bones flask implementation.
 {% endblock %}
 
 {% block body %}
-<p>Hello World!  I am a bare-bones implementation of a flask-based Python 
-server.  I'm not much to look at right now, but I could grow into so much 
-more!</p>
+
+<h3 id="parking-map-header-text">
+	Parking Lot Map:
+</h3>
+
+<div id="parking-map-container">
+	<table id="parking-map">
+
+		{% for i in range(10) %}
+		<tr id="{{i}}">
+			<td class="parking-spot-cell"></td>
+		</tr>
+		{% endfor %}
+
+	</table>
+</div>
 {% endblock %}
