@@ -78,10 +78,10 @@ def setParkingSpaceCount(oneIndexedSpaceNumber):
 #
 
 def connectSheet():
-    if uninitialized():
+    if isUninitialized():
         makeConnection()
 
-def uninitialized():
+def isUninitialized():
     return (sheet == None)
 
 def makeConnection():
