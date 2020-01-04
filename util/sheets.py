@@ -2,32 +2,82 @@ import gspread
 import time
 from oauth2client.service_account import ServiceAccountCredentials
 
-arg = []
-outputs = []
-sheet1 = None
-sheet2 = None
-idnum = 0
+scope = []
+creds = []
+
 sheet = None
 client = None
-rowCount = None
-
-OCCUPIED_STRING = "OCCUPIED"
 
 def isThereParking():
     return (spacesAvailable() > 0)
-    
+
+def occupiedStatusList():
+    # Returns a list of bools that signify which parking spots are occupied
+
+    connectSheet() # Refresh the sheet values
+    statusList = sheet.col_values(2)[1:] # Get all booleans concerning occupation status
+
+    for status in statusList: # Cast all values to boolean for sanity checking
+        status = bool(status)
+
+    return statusList
+
 def spacesAvailable():
-    
-    sheetData = [] # Get CSV from Google Sheets to parse
-    
+    occupiedStatuses = occupiedStatusList()  # Get CSV from Google Sheets to parse
+
     parkingSpaceCount = 0
 
-    for str in sheetData:
-        if (str != OCCUPIED_STRING):
+    for i in range(0, len(occupiedStatuses)):
+        if isOccupied(i):
             parkingSpaceCount = parkingSpaceCount + 1
-    
+
     return parkingSpaceCount
-   
+
+def isOccupied(zeroIndexedSpaceNumber):
+    occupiedStatuses = occupiedStatusList() # Get CSV from Google Sheets to parse
+
+    return occupiedStatuses[zeroIndexedSpaceNumber] == "TRUE" # Get from list, cast to bool
+
+def setOccupied(zeroIndexedSpaceNumber):
+    connectSheet() # Refresh state
+
+    sheet.update_cell(2+zeroIndexedSpaceNumber, 2, True); # Set the specified space to be occupied
+
+
+def setVacant(zeroIndexedSpaceNumber):
+    connectSheet() # Refresh state
+
+    sheet.update_cell(2+zeroIndexedSpaceNumber, 2, False); # Set the specified space to be unoccupied
+
+def setParkingSpaceCount(oneIndexedSpaceNumber):
+    if (oneIndexedSpaceNumber < 1):
+        return
+
+    connectSheet() # refresh state
+
+    initialIndex = len(occupiedStatusList())
+
+    if oneIndexedSpaceNumber > initialIndex:
+        for i in range( (initialIndex + 2),(oneIndexedSpaceNumber + 2) ):
+            sheet.update_cell(i, 1, i-2)
+            sheet.update_cell(i, 2, False)
+    elif oneIndexedSpaceNumber < initialIndex:
+        for i in range( (oneIndexedSpaceNumber + 2),(initialIndex + 2)):
+            sheet.update_cell(i, 1, "")
+            sheet.update_cell(i, 2, "")
+
+
+#
+# All backend stuff to do with google sheets stuff
+#
+
+def connectSheet():
+    if uninitialized():
+        makeConnection()
+
+def uninitialized():
+    return (sheet == None)
+
 def makeConnection():
     # Make the connection to the Google Spreadsheet
     scope = ['https://spreadsheets.google.com/feeds',
@@ -36,5 +86,9 @@ def makeConnection():
 
     global client
     client = gspread.authorize(creds)
-    global sheet1
-    sheet1 = client.open('park-smart-264104').get_worksheet(0)
+    global sheet
+    sheet = client.open('parking-status').sheet1
+
+# ALL CODE THAT IS RUN FOR CERTAIN IS RUN HERE
+
+print(str(spacesAvailable()) + ", " + str(len(occupiedStatusList())))
