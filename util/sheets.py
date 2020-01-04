@@ -10,7 +10,7 @@ sheet = None
 logSheet = None
 client = None
 
-DATE_FORMAT_STRING = "%Y-%M-%d %H:%m:%s %z"
+DATE_FORMAT_STRING = "%Y-%m-%d %H:%M:%S EST"
 
 # Getters
 
@@ -113,8 +113,8 @@ def makeConnection():
     client = gspread.authorize(creds)
     global sheet
     global logSheet
-    sheet = client.open('parking-status').sheet1
-    logSheet = client.open("parking-status").logSheet
+    sheet = client.open('parking-status').get_worksheet(0)
+    logSheet = client.open("parking-status").get_worksheet(1)
 
 #
 # DateTime stuff
@@ -123,7 +123,7 @@ def makeConnection():
 def logVacancy(dateTimeValue = datetime.now()):
     timeListIndex = len(logSheet.col_values(1)) + 1    # Get row to insert time in
     logSheet.update_cell(timeListIndex, 1, dateTimeFormat(dateTimeValue)) # Insert time into list.
-    newLogValue = logSheet.read_cell(timeListIndex - 1, 2) - 1 # Get new count of people in lot
+    newLogValue = int(logSheet.cell(timeListIndex - 1, 2).value) - 1 # Get new count of people in lot
     logSheet.update_cell(timeListIndex, 2, newLogValue) # Set new count of people in lot to sheet
 
 def logOccupation(dateTimeValue = datetime.now()):
@@ -132,7 +132,7 @@ def logOccupation(dateTimeValue = datetime.now()):
     newOccupancyCount = 0
 
     if columnLength > 0: # If a previous value exists, our new occupancy is based on the previous value.
-        newOccupancyCount = logSheet.read_cell(timeListIndex - 1, 2) + 1
+        newOccupancyCount = int(logSheet.cell(timeListIndex - 1, 2).value) + 1
     else:                # Otherwise, our new occupancy is 1 because we assume that our initial occupancy is 0.
         newOccupancyCount = 1
 
@@ -141,8 +141,3 @@ def logOccupation(dateTimeValue = datetime.now()):
 
 
 # ALL CODE THAT IS RUN FOR CERTAIN IS RUN HERE
-
-from random import randint
-
-setOccupied(randint(0,10))
-setVacant(randint(0,10))
