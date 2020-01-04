@@ -1,0 +1,79 @@
+
+{% extends "template.html" %}
+
+{% block title %}
+Park Smart
+{% endblock %}
+
+{% block description %}
+Map of parking lot that shows parking spot availability.
+{% endblock %}
+
+{% block header_script %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+		crossorigin="anonymous"></script>
+
+<script type="text/javascript" 
+	    src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="row" id="row-1">
+
+	<div class="col-lg-7 d-none d-lg-block" id="left-col">
+		<div id="left-text-box">
+			<h2 id="left-text-header">Logo Goes Here</h2>
+			<p>
+				Some nice text or aesthetic image or something.
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+				sed do eiusmod tempor incididunt ut labore et dolore 
+				magna aliqua. Ut enim ad minim veniam, quis nostrud 
+				exercitation ullamco laboris nisi ut aliquip ex ea 
+				commodo consequat. Duis aute irure dolor in 
+				reprehenderit in voluptate velit esse cillum dolore eu 
+				fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+				non proident, sunt in culpa qui officia deserunt mollit 
+				anim id est laborum.
+			</p>
+		</div><!-- end div: "left-text-box" -->
+	</div><!-- end div: "left-col" -->
+	
+
+	<div class="col-lg-5" id="right-col">
+		<div id="parking-map-container">
+			<div id="parking-map-background">
+				<table id="parking-map">
+
+					{% for i in range(10) %}
+					<tr id="parking-spot-{{i}}">
+						<td class="parking-spot-cell"></td>
+					</tr>
+					{% endfor %}
+
+				</table>
+			</div><!-- end div: "parking-map-background" -->
+		</div><!-- end div: "parking-map-container" -->
+
+	</div><!-- end div: "right-col" -->
+</div><!-- end div: "row-1" -->
+
+<div class="row d-lg-none" id="row-2">
+	<div id="bottom-text-box">
+		<h2 id="bottom-text-header">Logo Goes Here</h2>
+		<p>
+			Some nice text or aesthetic image or something.
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+			sed do eiusmod tempor incididunt ut labore et dolore 
+			magna aliqua. Ut enim ad minim veniam, quis nostrud 
+			exercitation ullamco laboris nisi ut aliquip ex ea 
+			commodo consequat. Duis aute irure dolor in 
+			reprehenderit in voluptate velit esse cillum dolore eu 
+			fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+			non proident, sunt in culpa qui officia deserunt mollit 
+			anim id est laborum.
+		</p>
+	</div><!-- end div: "left-text-box" -->
+</div><!-- end div: "row-2" -->
+
+{% endblock %}
