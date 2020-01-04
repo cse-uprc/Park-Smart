@@ -9,43 +9,48 @@ GPIO.setmode(GPIO.BCM)
 TRIG = 23
 ECHO = 24
 
-print ("Distance Measurement in Progress")
-
 GPIO.setup(TRIG, GPIO.OUT)
 GPIO.setup(ECHO, GPIO.IN)
 
-# Ensure the Trigger pin is set low and let the sensor settle
-GPIO.output(TRIG, False)
-print ("Waiting for Sensor to Settle")
-time.sleep(2)
+def distance():
+    # Ensure the Trigger pin is set low and let the sensor settle
+    GPIO.output(TRIG, False)
+    time.sleep(2)
 
-# Trigger the module for 10 microseconds to create a short pulse.
-GPIO.output(TRIG, True)
-time.sleep(0.00001)
-GPIO.output(TRIG, False)
+    # Trigger the module for 10 microseconds to create a short pulse.
+    GPIO.output(TRIG, True)
+    time.sleep(0.00001)
+    GPIO.output(TRIG, False)
 
-# Get the timestamp for the last low point of the Echo pin
-while GPIO.input(ECHO) == 0:
     pulse_start = time.time()
-
-# Get the timestamp for the last high point of the Echo pin
-while GPIO.input(ECHO) == 1:
     pulse_end = time.time()
 
-# Get the elapsed time from the start and end times
-pulse_duration = pulse_end - pulse_start
+    # Get the timestamp for the last low point of the Echo pin
+    while GPIO.input(ECHO) == 0:
+         pulse_start = time.time()
 
-# The speed of sound at sea level is 343 m/s
-SPEED_OF_SOUND = 34300
+    # Get the timestamp for the last high point of the Echo pin
+    while GPIO.input(ECHO) == 1:
+         pulse_end = time.time()
 
-# Get the distance between the sensor and its object
-distance = pulse_duration * (SPEED_OF_SOUND / 2)
+    # Get the elapsed time from the start and end times
+    pulse_duration = pulse_end - pulse_start
 
-# Round the distance to 2 decimal places
-distance = round(distance, 2)
+    # The speed of sound at sea level is 343 m/s
+    SPEED_OF_SOUND = 34300
 
-print ("Distance:", distance, "cm")
+    # Get the distance between the sensor and its object
+    distance = (pulse_duration * SPEED_OF_SOUND) / 2
 
-GPIO.cleanup()
+    return distance
 
+if __name__ == '__main__':
+    try:
+        while True:
+            dist = distance()
+            print ("Measured Distance = %.1f cm" % dist)
+            time.sleep(1)
 
+    except KeyboardInterrupt:
+        print("Measurement stopped by User")
+        GPIO.cleanup()
