@@ -1,2 +1,4 @@
-# Ignore all json files
-*.json
+*/.*
+util/client_secret.json
+util/sheets_test.py
+*.pyc
