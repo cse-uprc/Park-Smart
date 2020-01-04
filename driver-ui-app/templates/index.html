@@ -1,0 +1,21 @@
+
+{% extends "template.html" %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block description %}
+A bare-bones flask implementation.
+{% endblock %}
+
+{% block header_script %}
+<script type="text/javascript" 
+	    src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<p>Hello World!  I am a bare-bones implementation of a flask-based Python 
+server.  I'm not much to look at right now, but I could grow into so much 
+more!</p>
+{% endblock %}
