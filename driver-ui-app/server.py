@@ -40,6 +40,45 @@ def getParkingSpace():
         parkingSpaceArray = [pSpace.serialize() for pSpace in parkingSpaces]
     );
 
+# update the status for a parking space
+@app.route("/updateParkingSpace")
+def updateParkingSpace():
+
+    # get remote input from an HTTP "post" request
+    if request.method == "POST":
+        requestData = request.form
+        req_id = int(request.form.get("id"))
+        req_isOccupied = request.form.get("isOccupied")
+    
+    # get remote input from an HTTP "get" request
+    if request.method == "GET":
+        requestData = request.args
+        req_id = int(request.args.get("id"))
+        req_isOccupied = request.args.get("isOccupied")
+    
+    try:
+        if int(req_isOccupied) == 0:
+            req_isOccupied = False
+            parkingSpaces[req_id].isOccupied = req_isOccupied
+        elif int(req_isOccupied) == 1:
+            req_isOccupied = True
+            parkingSpaces[req_id].isOccupied = req_isOccupied
+        else:
+            return jsonify(
+                success = False,
+                returnMessage = "Invalid input in HTTP request",
+            )
+    except:
+        return jsonify(
+            success = False,
+            returnMessage = "A serverside exception occurred",
+        )
+
+    return jsonify(
+        success = True,
+        returnMessage = "Parking Space #" + str(req_id) + " Successfully Updated"
+    );
+
 # configure server
 server_address = "0.0.0.0"
 port_number = 8080
