@@ -9,7 +9,9 @@ function updateParkingSpaces()
         {
             console.log("boop!");
             $("#parking-spot-" + i + " > td").html(
-                "<span class='" + (data.parkingSpaceArray[i].isOccupied ? "occupied" : "not-occupied") + "'>⬤</span>"
+                "<span class='"
+              + (data.parkingSpaceArray[i].isOccupied ? "occupied" : "not-occupied")
+              + "'>⬤</span>"
             );
         }
     }); 

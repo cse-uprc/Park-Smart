@@ -5,8 +5,16 @@
 # Description:
 # The server for the web app
 
-import os
+# Import Python modules
+import os, sys
 from flask import Flask, render_template, request, jsonify
+
+# Make local modules in other directories accessible by modifying the
+# python "path" dictionary
+sys.path.append("./../util")
+
+# Import local modules
+import sheets
 
 # main Flask server application object
 app = Flask(__name__)
