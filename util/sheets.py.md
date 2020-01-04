@@ -24,7 +24,7 @@
 these **do not** need to be called. They are used entirely by the other methods in this file.
 * connectSheet()
     - If no connection has been made, make a connection to the spreadsheet.
-* uninitialized()
+* isUninitialized()
     - Return whether or not the sheet has been initialized in the first place.
 * makeConnection()
     - Make outgoing connection to Google Sheets spreadsheet.
