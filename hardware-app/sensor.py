@@ -3,18 +3,16 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-
-# Pin numbers for the Trigger and Echo on the Ultrasonic Sensor
-TRIG = 23
-ECHO = 24
-
-GPIO.setup(TRIG, GPIO.OUT)
-GPIO.setup(ECHO, GPIO.IN)
-
-
 def computeDistance():
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+
+    # Pin numbers for the Trigger and Echo on the Ultrasonic Sensor
+    TRIG = 23
+    ECHO = 24
+
+    GPIO.setup(TRIG, GPIO.OUT)
+    GPIO.setup(ECHO, GPIO.IN)
     # Trigger the sensor and get back the distance between itself and the object it is pointed at.
     GPIO.output(TRIG, False)
     time.sleep(2)
