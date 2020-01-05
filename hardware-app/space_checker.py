@@ -20,7 +20,7 @@ def getDistance():
     distances = []
 
     for trial in range(0, 9):
-        distances[trial] = sensor.computeDistance()
+        distances[trial].append(sensor.computeDistance())
     
     medianDistance = statistics.median(distances)
     
