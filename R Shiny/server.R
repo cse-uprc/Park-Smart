@@ -26,7 +26,7 @@ getOccupiedTimeRange <- function(num_days){
 }
 
 server <- function(input, output, session) {
-  autoInvalidate <- reactiveTimer(1000)
+  autoInvalidate <- reactiveTimer(2000)
   output$main_plot <- renderPlotly({
   # get and plot data from getOccupiedTimeRange()
   occupiedData <- getOccupiedTimeRange(input$numeric_date_range)
