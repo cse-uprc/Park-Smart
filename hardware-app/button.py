@@ -17,6 +17,6 @@ def button_callback(channel):
         controller.updateRow()
         count += 1
 
-GPIO.add_event_detect(10, GPIO.RISING, callback=button_callback)
+GPIO.add_event_detect(BUTTON_PIN, GPIO.RISING, callback=button_callback)
 
 GPIO.cleanup()
