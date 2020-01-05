@@ -29,7 +29,7 @@ def button_callback():
 
 try:
     global count
-    while count < 10:
+    while count < 11:
         if GPIO.input(BUTTON_PIN) == 1:
            button_callback()
 
