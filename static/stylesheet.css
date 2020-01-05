@@ -75,7 +75,7 @@ a {
 }
 
 #bottom-text-box {
-    background-color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.0);
     padding: 50px 50px 40px 50px;
     border-radius: 10px;
 }
@@ -88,25 +88,43 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 95%;
+    min-height: 550px;
+    min-width: 200px;
 }
 
 #parking-map-background {
     display: flex;
-    align-items: center;
+/*    align-items: center;*/
     justify-content: center;
-    width: 200px;
-    height: 550px;
-    padding: 20px, 0px, 20px, 0px;
+    width: 55%;
+    min-width: 200px;
+    height: 100%;
+    padding: 10% 0px 20px 0px;
     border-radius: 10px;
     background-color: #3a3535;
+}
+
+@media screen and (min-width: 992px)
+{
+    #parking-map-background {
+        width: 200px;
+    }
+}
+
+#parking-map {
+    width: 30%;
+    height: 90%;
+    min-width: 75px;
 }
 
 .parking-spot-cell {
     border-color: yellow;
     border-width: 5px 5px 5px 0px;
     border-style: solid;
-    width: 75px;
-    height: 45px;
+    width: 100%;
+    height: 10%;
+    min-height: 45px;
     padding-top: 0px;
     padding-bottom: 0px;
     text-align: center;

@@ -51,20 +51,11 @@ Map of parking lot that shows parking spot availability.
 
 <div class="row d-lg-none" id="row-2">
 	<div id="bottom-text-box">
-		<h2 id="bottom-text-header">Logo Goes Here</h2>
-		<p>
-			Some nice text or aesthetic image or something.
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-			sed do eiusmod tempor incididunt ut labore et dolore 
-			magna aliqua. Ut enim ad minim veniam, quis nostrud 
-			exercitation ullamco laboris nisi ut aliquip ex ea 
-			commodo consequat. Duis aute irure dolor in 
-			reprehenderit in voluptate velit esse cillum dolore eu 
-			fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-			non proident, sunt in culpa qui officia deserunt mollit 
-			anim id est laborum.
-		</p>
-	</div><!-- end div: "left-text-box" -->
+		<div class="logo-container">
+			<img class="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="ParkSmart Logo" />
+		</div>
+		<img class="cars-image" src="{{ url_for('static', filename='images/parked-cars-cropped.jpg') }}" alt="An aerial photograph of parked cars." />
+	</div><!-- end div: "bottom-text-box" -->
 </div><!-- end div: "row-2" -->
 
 {% endblock %}

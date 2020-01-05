@@ -87,21 +87,12 @@ def updateParkingSpace():
 server_address = "0.0.0.0"
 port_number = 8080
 
-def main():
-	# put the ten parking spaces in the array
-    for i in range (10):
-        parkingSpaces.append(ParkingSpace(i, False))
-
-    # run server
-    app.run(host = os.getenv('IP', server_address), 
-            port = int(os.getenv('PORT', port_number)))
+# put the ten parking spaces in the array
+for i in range (10):
+    parkingSpaces.append(ParkingSpace(i, False))
 
 # start of program
 if __name__ == "__main__":
-    
-    # put the ten parking spaces in the array
-    for i in range (10):
-        parkingSpaces.append(ParkingSpace(i, False))
 
     # run server
     app.run(host = os.getenv('IP', server_address), 

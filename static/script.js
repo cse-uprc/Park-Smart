@@ -1,5 +1,5 @@
 // Number of milleseconds between updates
-var INTERVAL = 5000;
+var INTERVAL = 2000;
 
 // Function for updating the parking spaces
 function updateParkingSpaces()
