@@ -19,8 +19,11 @@ def calibrate():
 def getDistance():
     distances = []
 
-    for trial in range(0, 9):
-        distances[trial].append(sensor.computeDistance())
+    s = 0
+
+    while s < 10:
+        distances.append(sensor.computeDistance())
+        s += 1
     
     medianDistance = statistics.median(distances)
     
