@@ -4,7 +4,7 @@ html {
 
 body {
     height: 100%;
-    background-color: #000000;
+    background-color: black;
 }
 
 p {
@@ -32,11 +32,11 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 170px 50px 170px 50px;
+    padding: 10px 50px 170px 50px;
 }
 
 #right-col {
-    background-color: #9999ff;
+    background-color: #95b49f;
     padding-bottom: 30px;
 }
 
@@ -49,9 +49,29 @@ a {
 }
 
 #left-text-box {
-    background-color: #ffffff;
-    padding: 50px 50px 50px 50px;
-    border-radius: 10px;
+    background-color: #9999ff;
+    padding: 0px 0px 0px 0px;
+    border-radius: 15px;
+}
+
+.logo-container {
+    width: 100%;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #3a3535;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+.logo {
+    width: 400px;
+}
+
+.cars-image {
+    width: 100%;
+    border-radius: 0px 0px 10px 10px;
 }
 
 #bottom-text-box {

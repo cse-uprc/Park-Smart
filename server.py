@@ -9,13 +9,6 @@
 import os, sys, traceback
 from flask import Flask, render_template, request, jsonify
 
-# Make local modules in other directories accessible by modifying the
-# python "path" dictionary
-sys.path.append("./../util")
-
-# Import local modules
-import sheets
-
 # main Flask server application object
 app = Flask(__name__)
 
@@ -71,11 +64,9 @@ def updateParkingSpace():
         if int(req_isOccupied) == 0:
             req_isOccupied = False
             parkingSpaces[req_id].isOccupied = req_isOccupied
-            sheets.setVacant(req_id)
         elif int(req_isOccupied) == 1:
             req_isOccupied = True
             parkingSpaces[req_id].isOccupied = req_isOccupied
-            sheets.setOccupied(req_id)
         else:
             return jsonify(
                 success = False,
@@ -95,6 +86,15 @@ def updateParkingSpace():
 # configure server
 server_address = "0.0.0.0"
 port_number = 8080
+
+def main():
+	# put the ten parking spaces in the array
+    for i in range (10):
+        parkingSpaces.append(ParkingSpace(i, False))
+
+    # run server
+    app.run(host = os.getenv('IP', server_address), 
+            port = int(os.getenv('PORT', port_number)))
 
 # start of program
 if __name__ == "__main__":
