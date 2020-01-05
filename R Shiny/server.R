@@ -5,7 +5,7 @@ library(lubridate)
 library(plotly)
 sheets_auth(scope = "https://www.googleapis.com/auth/drive")
 drive_auth(token = sheets_token())
-url <- "https://docs.google.com/spreadsheets/d/1tfKdmx19QHB5thPQbzXjL8ze-jA0TPOM1Zyx3eGRkP4/edit?folder=0APHNUN_jVyb8Uk9PVA#gid=0"
+url <- "https://docs.google.com/spreadsheets/d/1D9TWtetO5rnOWsWnh08W4gsAl5zo-kS2fCveKGF5Oig/edit#gid=0"
 
 getAvailable <- function(){
   sampleTibble <- read_sheet(url)
@@ -26,7 +26,7 @@ getOccupiedTimeRange <- function(num_days){
 }
 
 server <- function(input, output, session) {
-  autoInvalidate <- reactiveTimer(2000)
+  autoInvalidate <- reactiveTimer(2500)
   output$main_plot <- renderPlotly({
   # get and plot data from getOccupiedTimeRange()
   occupiedData <- getOccupiedTimeRange(input$numeric_date_range)
