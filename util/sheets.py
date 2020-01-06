@@ -1,4 +1,4 @@
-mport gspread
+import gspread
 import time
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import *
