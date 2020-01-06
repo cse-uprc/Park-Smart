@@ -1,5 +1,5 @@
 # Using sheets.py
-
+Note: Deprecated.
 ## Getters
 * isThereParking()
     - Is there at least one vacant parking space in the lot? Returns boolean as appropriate.
